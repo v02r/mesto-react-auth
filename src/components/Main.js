@@ -37,7 +37,7 @@ const Main = (props) => {
       <section className="profile">
         <div className="profile__profile-info">
           <div className="profile__avatar-button" onClick={onEditAvatar}>
-            <img src={userAvatar} alt="фото пофиля Жак-Ив Кусто" className="profile__avatar-image"/>
+            <img src={userAvatar} alt={`фото профиля ${userName || ""}`} className="profile__avatar-image"/>
             <button className="profile__avatar-edit" type="button"></button>
           </div>
           <div className="profile__name-block">
@@ -53,24 +53,9 @@ const Main = (props) => {
       <section className="elements">
         {
           cards.map((card) => (
-            <Card card={card} onCardClick={onCardClick}/>
+            <Card key={card._id} card={card} onCardClick={onCardClick}/>
           ))
         }
-        {/*<template id="template-element">*/}
-          {/*<div className="elements__card">*/}
-          {/*  <img className="elements__image" src="#" alt="место"/>*/}
-          {/*  <div className="elements__mesto">*/}
-          {/*    <h2 className="elements__title"></h2>*/}
-          {/*    <div className="elements__title_like-block">*/}
-          {/*      <button className="elements__like-button" type="button" title="Нравится"></button>*/}
-          {/*      <span*/}
-          {/*        className="elements__like-number"*/}
-          {/*        aria-label="Количество лайков"></span>*/}
-          {/*    </div>*/}
-          {/*    <button className="elements__delete-button" type="button" title="Удалить"></button>*/}
-          {/*  </div>*/}
-          {/*</div>*/}
-        {/*</template>*/}
       </section>
     </main>
   );

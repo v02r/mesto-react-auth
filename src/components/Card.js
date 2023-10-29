@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Card = ({card, onCardClick}) => {
-  console.log(card);
   const {
     likes,
     _id,
@@ -15,10 +14,9 @@ const Card = ({card, onCardClick}) => {
     onCardClick(card);
   }
 
-
   return (
     <div className="elements__card">
-      <img className="elements__image" src={link} alt="место" onClick={handleClick}/>
+      <img className="elements__image" src={link} alt={name || "Место"} onClick={handleClick}/>
       <div className="elements__mesto">
         <h2 className="elements__title">{name}</h2>
         <div className="elements__title_like-block">
