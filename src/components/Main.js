@@ -1,35 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {api} from "../utils/Api";
 import Card from "./Card";
+import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
 const Main = (props) => {
-  const {onEditProfile, onAddPlace, onEditAvatar, onCardClick } = props;
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
-  const [cards, setCards] = useState([]);
+  const {onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, cards, onCardDelete } = props;
+  const currentUser = useContext(CurrentUserContext);
+  const userName = currentUser.name;
+  const userDescription = currentUser.about;
+  const userAvatar = currentUser.avatar;
 
-  useEffect(() => {
-    api.getUserInfo()
-      .then((res) => {
-        setUserName(res.name);
-        setUserDescription(res.about);
-        setUserAvatar(res.avatar);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }, []);
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }, []);
 
   return (
     <main className="content">
@@ -37,7 +17,7 @@ const Main = (props) => {
       <section className="profile">
         <div className="profile__profile-info">
           <div className="profile__avatar-button" onClick={onEditAvatar}>
-            <img src={userAvatar} alt={`фото профиля ${userName || ""}`} className="profile__avatar-image"/>
+            <img src={userAvatar} alt="фото пофиля Жак-Ив Кусто" className="profile__avatar-image"/>
             <button className="profile__avatar-edit" type="button"></button>
           </div>
           <div className="profile__name-block">
@@ -53,7 +33,7 @@ const Main = (props) => {
       <section className="elements">
         {
           cards.map((card) => (
-            <Card key={card._id} card={card} onCardClick={onCardClick}/>
+            <Card key={card._id} onCardDelete={onCardDelete} onCardLike={onCardLike} card={card} onCardClick={onCardClick}/>
           ))
         }
       </section>

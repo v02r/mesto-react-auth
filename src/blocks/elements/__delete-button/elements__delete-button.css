@@ -12,7 +12,7 @@
     cursor: pointer;
     transition: opacity 0.1s linear;
     visibility: hidden;
-  pointer-events: none;
+     pointer-events: none;
   }
 
   .element__delete:hover {
