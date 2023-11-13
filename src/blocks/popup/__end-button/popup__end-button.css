@@ -13,7 +13,7 @@
 }
 
 @media screen and (min-width: 910px) {
-    .popup__end-button {
+  .popup__end-button {
     width: 358px;
     height: 50px;
     font-size: 18px;

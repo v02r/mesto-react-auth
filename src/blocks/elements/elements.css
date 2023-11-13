@@ -8,8 +8,8 @@
 }
 
 @media screen and (min-width: 910px) {
-    .elements {
+  .elements {
     margin: 51px auto 0;
     max-width: 880px;
-    }
   }
+}
