@@ -30,23 +30,25 @@ function App() {
     const [cards, setCards] = useState([]);
 
     useEffect(() => {
-        api
-            .getInitialCards()
-            .then((res) => {
-                setCards(res);
-            })
-            .catch((err) => {
-                console.log(`Ошибка: ${err}`);
-            });
-        api
-            .getUserInfo()
-            .then((userData) => {
-                setCurrentUser(userData);
-            })
-            .catch((err) => {
-                console.log(`Ошибка: ${err}`);
-            });
-    }, []);
+        if(isLoggedIn) {
+            api
+                .getInitialCards()
+                .then((res) => {
+                    setCards(res);
+                })
+                .catch((err) => {
+                    console.log(`Ошибка: ${err}`);
+                });
+            api
+                .getUserInfo()
+                .then((userData) => {
+                    setCurrentUser(userData);
+                })
+                .catch((err) => {
+                    console.log(`Ошибка: ${err}`);
+                });
+        }
+    }, [isLoggedIn]);
 
     const closeAllPopups = () => {
         setIsEditProfilePopupOpen(false);
@@ -169,7 +171,7 @@ function App() {
                 if(data) {
                     setIsLoggedIn(true);
                     localStorage.setItem("jwt", data.token);
-                    handleTokenCheck(data.token);
+                    navigate("/", {replace: true});
                 }
             })
             .catch((err) => {
@@ -183,11 +185,7 @@ function App() {
         navigate("/sign-in", {replace: true});
     };
 
-    const handleTokenCheck = () => {
-        const jwt = localStorage.getItem("jwt");
-        if (!jwt) {
-            return;
-        }
+    const handleTokenCheck = (jwt) => {
         authApi.getUserInfo(jwt)
             .then((data) => {
                 if(data) {
@@ -200,7 +198,11 @@ function App() {
     };
 
     useEffect(() => {
-        handleTokenCheck();
+        const jwt = localStorage.getItem("jwt");
+        if (!jwt) {
+            return;
+        }
+        handleTokenCheck(jwt);
     }, []);
 
 
