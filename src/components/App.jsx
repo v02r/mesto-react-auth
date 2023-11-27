@@ -167,10 +167,11 @@ function App() {
 
     const handleAuthorization = (data) => {
         return authApi.login(data)
-            .then((data) => {
-                if(data) {
+            .then((res) => {
+                if(res) {
                     setIsLoggedIn(true);
-                    localStorage.setItem("jwt", data.token);
+                    localStorage.setItem("jwt", res.token);
+                    setEmail(data.email);
                     navigate("/", {replace: true});
                 }
             })
